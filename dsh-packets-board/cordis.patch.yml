@@ -1,0 +1,6 @@
+- insert:
+    - id: packets-board
+      name: '@local/dsh-packets-board'
+      config:
+        agentsDir: /home/vovan/Предприниматель/teamwinning-app/agents
+        route: /api/master-packets

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Packets board",
+    "description": "Right-sidebar tab with packet headers from agents/ (status, model, budget, zone) and live sessions — the foreman's dashboard."
+  }
+}
