@@ -23,3 +23,8 @@
 	url = https://github.com/ferrovovan/dsh-plugin-codex-board.git
 	branch = main
 	ignore = all
+[submodule "dsh-promt-studio"]
+	path = dsh-promt-studio
+	url = https://github.com/ferrovovan/dsh-plugin-promt-studio.git
+	branch = main
+	ignore = all

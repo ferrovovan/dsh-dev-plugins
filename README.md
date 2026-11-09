@@ -20,6 +20,8 @@
 | `dsh-packets-board/` | `@local/dsh-packets-board` | «Борт пакетов»: вкладка правого сайдбара — YAML-шапки `agents/П-*/` + живые тиммейты | 0.1.0 заготовка |
 | `dsh-mailbox/` | `@local/dsh-mailbox` | «Почта»: доставка писем `Mailbox/` в сессию, с регулируемым порогом приёмки (лимит/пауза/отключение) | 0.1.0 заготовка |
 | `dsh-wave-gate-tool/` | `@local/dsh-wave-gate-tool` | «Wave-gate как инструмент»: `wave-gate verify` и `wave-daemon` — модель-facing тул | 0.1.0 заготовка |
+| `dsh-codex-board/` | `@local/dsh-codex-board` | «Доска для кодексов»: kanban расстановки задач, колонки — типы агентов с рабочими папками | 0.2.12 проверено в живом |
+| `dsh-promt-studio/` | `@local/dsh-promt-studio` | «PROMT STUDIO»: граф знаний .md-промптов (Obsidian graph view) в desktop-облике окна | 0.1.0 заготовка |
 
 ## Правила семьи (обязательны для всех репозиториев)
 
