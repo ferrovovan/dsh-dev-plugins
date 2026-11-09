@@ -2,19 +2,24 @@
 	path = dsh-rashod-live
 	url = https://github.com/ferrovovan/dsh-plugin-agents-expenses.git
 	branch = main
+	ignore = all
 [submodule "dsh-packets-board"]
 	path = dsh-packets-board
 	url = https://github.com/ferrovovan/dsh-plugin-packets-board.git
 	branch = main
+	ignore = all
 [submodule "dsh-mailbox"]
 	path = dsh-mailbox
 	url = https://github.com/ferrovovan/dsh-plugin-mailbox.git
 	branch = main
+	ignore = all
 [submodule "dsh-wave-gate-tool"]
 	path = dsh-wave-gate-tool
 	url = https://github.com/ferrovovan/dsh-plugin-wave-gate-tool.git
 	branch = main
+	ignore = all
 [submodule "dsh-codex-board"]
 	path = dsh-codex-board
 	url = https://github.com/ferrovovan/dsh-plugin-codex-board.git
 	branch = main
+	ignore = all
