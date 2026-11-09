@@ -28,3 +28,8 @@
 	url = https://github.com/ferrovovan/dsh-plugin-promt-studio.git
 	branch = main
 	ignore = all
+[submodule "dsh-word-basket"]
+	path = dsh-word-basket
+	url = https://github.com/ferrovovan/dsh-plugin-word-basket.git
+	branch = main
+	ignore = all
