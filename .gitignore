@@ -3,3 +3,4 @@ node_modules/
 .DS_Store
 .лаборатория/
 /.inspect-transport-test/
+.codex-demo/
