@@ -1,0 +1,15 @@
+[submodule "dsh-rashod-live"]
+	path = dsh-rashod-live
+	url = /home/vovan/Software/dsh-dev-plugins/dsh-rashod-live
+[submodule "dsh-packets-board"]
+	path = dsh-packets-board
+	url = /home/vovan/Software/dsh-dev-plugins/dsh-packets-board
+[submodule "dsh-mailbox"]
+	path = dsh-mailbox
+	url = /home/vovan/Software/dsh-dev-plugins/dsh-mailbox
+[submodule "dsh-wave-gate-tool"]
+	path = dsh-wave-gate-tool
+	url = /home/vovan/Software/dsh-dev-plugins/dsh-wave-gate-tool
+[submodule "dsh-codex-board"]
+	path = dsh-codex-board
+	url = /home/vovan/Software/dsh-dev-plugins/dsh-codex-board
