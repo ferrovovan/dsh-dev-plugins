@@ -22,7 +22,7 @@
 | `dsh-wave-gate-tool/` | `@local/dsh-wave-gate-tool` | «Wave-gate как инструмент»: `wave-gate verify` и `wave-daemon` — модель-facing тул | 0.1.0 заготовка |
 | `dsh-codex-board/` | `@local/dsh-codex-board` | «Доска для кодексов»: kanban расстановки задач, колонки — типы агентов с рабочими папками | 0.2.12 проверено в живом |
 | `dsh-promt-studio/` | `@local/dsh-promt-studio` | «PROMT STUDIO»: граф знаний .md-промптов (Obsidian graph view) в desktop-облике окна | 0.1.0 заготовка |
-| `dsh-word-basket/` | `@local/dsh-word-basket` | «Волшебная корзинка слов»: ведёрко-спрайт поверх всех сессий, инвентарь фраз, вставка перетаскиванием в окошко ввода | 0.1.0 заготовка |
+| `dsh-word-basket/` | `@local/dsh-word-basket` | «Волшебная корзинка слов»: ведёрко-спрайт поверх всех сессий, инвентарь фраз, вставка перетаскиванием в окошко ввода, «из буфера», Ctrl+Alt+B, тула `word_basket` | 0.2.0 ядро принято в живом |
 
 ## Правила семьи (обязательны для всех репозиториев)
 
