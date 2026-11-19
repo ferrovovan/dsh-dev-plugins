@@ -1,9 +1,13 @@
 name: family check
 
 # Один workflow на два смысла:
-#  1) push/PR в зонтик — проверка всех подмодулей на этот коммит (checkout с
-#     submodules: recursive берёт ровно зафиксированные коммиты);
+#  1) push/PR в зонтик — проверка всех подмодулей на этот коммит;
 #  2) еженедельный прогон — ловит расхождение с STANDART.md, когда зонтик не менялся.
+#
+# Подмодули инициализируются по одному и best-effort: репозиторий, которого
+# на GitHub ещё нет (или доступ к которому не дан), помечается пропущенным,
+# а не роняет весь прогон — иначе один незаполненный репо ослепляет гейт
+# для остальных. Пропуски видны в логе отдельной строкой.
 
 on:
   push:
@@ -22,7 +26,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: recursive
           fetch-depth: 0
 
       - uses: actions/setup-node@v4
@@ -36,6 +39,17 @@ jobs:
       - name: Зависимости проверки
         run: pip install pyyaml
 
+      - name: Инициализация подмодулей (по одному)
+        run: |
+          git config --global --add safe.directory "$PWD"
+          for p in $(git config -f .gitmodules --get-regexp '\.path$' | awk '{print $2}'); do
+            if git submodule update --init --depth 1 "$p" 2>/dev/null; then
+              echo "  ✓ $p"
+            else
+              echo "::warning::подмодуль $p недоступен — проверки его пропускают"
+            fi
+          done
+
       - name: Семейный стандарт (STANDART.md)
         run: bash scripts/check-family.sh
 
@@ -44,7 +58,11 @@ jobs:
 
       - name: Чистота деревьев после проверок
         run: |
-          git submodule foreach --recursive 'git update-index --refresh >/dev/null 2>&1 || true; test -z "$(git status --porcelain)"' \
-            || { echo "::error::проверка изменила файлы внутри плагина — check.sh должен быть только читающим"; exit 1; }
-          test -z "$(git status --porcelain --ignore-submodules=none)" \
+          for p in $(git config -f .gitmodules --get-regexp '\.path$' | awk '{print $2}'); do
+            [ -e "$p/.git" ] || continue
+            ( cd "$p" && git update-index --refresh >/dev/null 2>&1 || true
+              test -z "$(git status --porcelain)" ) \
+              || { echo "::error::$p: проверка изменила файлы плагина — check.sh должен быть только читающим"; exit 1; }
+          done
+          test -z "$(git status --porcelain --ignore-submodules=all)" \
             || { echo "::error::грязное дерево зонтика после проверок"; exit 1; }

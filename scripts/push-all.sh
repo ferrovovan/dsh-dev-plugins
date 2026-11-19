@@ -17,12 +17,28 @@ for p in $paths; do
     continue
   fi
   echo "== push $p → ${url#https://github.com/}"
-  git -C "$p" push --follow-tags origin HEAD:main || fail=1
+  if ! git -C "$p" push --follow-tags origin HEAD:main; then
+    # HTTPS-кредов нет, а SSH-ключ есть — пробуем тот же репо по ssh.
+    ssh_url=${url/https:\/\/github.com\//git@github.com:}
+    if [ "$ssh_url" != "$url" ]; then
+      echo "   ↻ повтор по ssh: ${ssh_url#git@}"
+      git -C "$p" push --follow-tags "$ssh_url" HEAD:main || fail=1
+    else
+      fail=1
+    fi
+  fi
 done
 
 umbrella=$(git remote get-url origin)
 echo "== push зонтик → ${umbrella#https://github.com/}"
-git push origin main || fail=1
+if ! git push origin main; then
+  ssh_url=${umbrella/https:\/\/github.com\//git@github.com:}
+  if [ "$ssh_url" != "$umbrella" ] && git push "$ssh_url" main; then
+    :
+  else
+    fail=1
+  fi
+fi
 
 if [ "$fail" -ne 0 ]; then
   echo

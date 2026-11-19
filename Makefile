@@ -4,6 +4,7 @@ REPOS := dsh-rashod-live dsh-packets-board dsh-mailbox dsh-wave-gate-tool dsh-co
 .PHONY: check family $(REPOS)
 check: $(REPOS)
 $(REPOS):
+	@test -f $@/Makefile || { echo "== $@ ⊘ подмодуль не инициализирован — пропуск"; exit 0; }
 	@echo "== $@"; $(MAKE) -C $@ check
 family:
 	@bash scripts/check-family.sh
