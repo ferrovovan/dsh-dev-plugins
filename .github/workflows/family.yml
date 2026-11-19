@@ -1,0 +1,50 @@
+name: family check
+
+# Один workflow на два смысла:
+#  1) push/PR в зонтик — проверка всех подмодулей на этот коммит (checkout с
+#     submodules: recursive берёт ровно зафиксированные коммиты);
+#  2) еженедельный прогон — ловит расхождение с STANDART.md, когда зонтик не менялся.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '30 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  family:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Зависимости проверки
+        run: pip install pyyaml
+
+      - name: Семейный стандарт (STANDART.md)
+        run: bash scripts/check-family.sh
+
+      - name: Каждый плагин — своим check.sh (make check)
+        run: make check
+
+      - name: Чистота деревьев после проверок
+        run: |
+          git submodule foreach --recursive 'git update-index --refresh >/dev/null 2>&1 || true; test -z "$(git status --porcelain)"' \
+            || { echo "::error::проверка изменила файлы внутри плагина — check.sh должен быть только читающим"; exit 1; }
+          test -z "$(git status --porcelain --ignore-submodules=none)" \
+            || { echo "::error::грязное дерево зонтика после проверок"; exit 1; }
