@@ -33,20 +33,13 @@ git-submodule): своя версия (semver в `package.json`), свои те�
 
 Нужен запущенный DeepSeek Harness с профилем, в который ставишь.
 
-**1. Клонировать зонтик и подтянуть плагины:**
+**1. Клонировать зонтик вместе с плагинами:**
 
 ```bash
-git clone https://github.com/ferrovovan/dsh-dev-plugins.git
-cd dsh-dev-plugins
-# все доступные подмодули, по одному — недоступный не роняет остальные:
-for p in $(git config -f .gitmodules --get-regexp '\.path$' | awk '{print $2}'); do
-  git submodule update --init --depth 1 "$p" || echo "⊘ $p пропущен"
-done
+git clone --recursive https://github.com/ferrovovan/dsh-dev-plugins.git
+# или уже клонированный:
+git submodule update --init --recursive
 ```
-
-> На 2026-11-19 у `dsh-promt-studio` и `dsh-word-basket` репозиторий на GitHub
-> ещё нет (коммиты живут локально) — они и будут «пропущены». После их
-> создания и `scripts/push-all.sh` команда выше станет полной.
 
 **2. Установить бандл — только через plugin manager** (он сам допишет
 профиль; руками `cordis.patch.yml` профиля не правим):
@@ -78,10 +71,9 @@ done
 
 ```bash
 git pull
-for p in $(git config -f .gitmodules --get-regexp '\.path$' | awk '{print $2}'); do
-  git submodule update --init --depth 1 "$p" || echo "⊘ $p пропущен"
-done
+git submodule update --init --recursive
 ```
+
 
 затем переустановка изменённых бандлов (`remove_bundle` → `install_bundle`).
 
